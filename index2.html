@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissors</title>
+    <style>
+        html {
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            max-width: 100vw;
+            max-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        main {
+            background-color: rgb(167, 209, 247);
+            width: 700px;
+            padding: 10px 0px 20px 0;
+            margin: auto;
+        }
+
+        .containerStyle {
+            background-color: rgb(255, 0, 0);
+            width: 400px;
+            height: auto;
+            margin: auto;
+            text-align: center;   
+            border: 3px solid rgb(255, 255, 255);
+        }
+
+        .btnChoice {
+            display: inline-block;
+        }
+       
+        #score {
+            margin: auto;
+            margin-top: 30px;
+            background-color: rgb(89, 92, 252);
+            width: 300px;
+            border: 3px solid black;
+        }
+
+        #score > p {
+            margin-left: 20px;
+        }
+
+        #result {
+            margin: auto;
+            margin-top: 30px;
+            background-color: rgb(218, 255, 51);
+            width: 300px;
+            text-align: center;
+            border: 3px solid black;
+        }
+
+        #result > p {
+            display: inline-block;
+        }
+
+        button {
+            width: 100px;
+            margin: 10px;
+        }
+
+    </style>
+
+</head>
+    <body>
+
+        <h1>ROCK PAPER SCISSORS</h1>
+        
+
+    <main>
+        <h3>Instructions: Choose and click the button of your choice.<br>
+            First to 5 points wins the game.</h3>
+        <div id='container'>
+          
+        </div>
+        <div id='score'>
+            <p id='player'>PLAYER SCORE:</p> 
+            <p id='computer'>COMPUTER SCORE:</p>
+        </div>
+        <div id='result'>
+            <p>ROUND RESULT:</p></br>
+            <p id='resultMsg'></p> 
+        </div>
+            
+    </main>
+
+        <script>
+             
+            let playerScore = 0;
+            let computerScore = 0;
+
+            const container = document.querySelector('#container');
+            container.classList.add('containerStyle');
+
+            const btnROCK = document.createElement('button');
+            const btnPAPER = document.createElement('button');
+            const btnSCISSORS = document.createElement('button');
+
+            btnROCK.textContent = 'ROCK';
+            btnPAPER.textContent = 'PAPER';
+            btnSCISSORS.textContent = 'SCISSORS';
+
+            btnROCK.classList.add('btnChoice');
+            btnPAPER.classList.add('btnChoice');
+            btnSCISSORS.classList.add('btnChoice');
+            
+            btnROCK.addEventListener('click', () => {playRound('ROCK');});
+            btnPAPER.addEventListener('click', () => {playRound('PAPER');});
+            btnSCISSORS.addEventListener('click', () => {playRound('SCISSORS');});
+            
+            container.appendChild(btnROCK);
+            container.appendChild(btnPAPER);
+            container.appendChild(btnSCISSORS);
+            
+
+            function computerPlay(){
+                
+                let x = Math.floor(Math.random() * 3);
+
+                if(x == 0){
+                    return 'ROCK'
+                }else if(x == 1){
+                    return 'PAPER';
+                }else{
+                    return 'SCISSORS';
+                }
+            }
+            
+            function playRound(playerSelection){
+                let computerSelection = computerPlay();
+                let roundWinner;
+                
+                switch(playerSelection){
+                    
+                    case 'ROCK':
+                        if(computerSelection == 'SCISSORS'){
+                            console.log('You won! Rock beats Scissors!');
+                            document.getElementById('resultMsg').textContent = 'You won! Rock beats Scissors!';
+                            roundWinner = 'Player';
+                        }else if(computerSelection == 'PAPER'){
+                            console.log('You lose! Rock loses to Paper!');
+                            document.getElementById('resultMsg').textContent = 'You lose! Rock loses to Paper!';
+                            roundWinner = 'Computer';
+                        }else{
+                            console.log('It\'s a draw!');
+                            document.getElementById('resultMsg').textContent = 'It\'s a draw!';
+                            roundWinner = 'Draw';
+                        }
+                        break;
+                    
+                    case 'PAPER':
+                        if(computerSelection == 'ROCK'){
+                            console.log('You won! Paper beats Rock!');
+                            document.getElementById('resultMsg').textContent = 'You won! Paper beats Rock!';
+                            roundWinner = 'Player';
+                        }else if(computerSelection == 'SCISSORS'){
+                            console.log('You lose! Paper loses to Scissors!');
+                            document.getElementById('resultMsg').textContent = 'You lose! Paper loses to Scissors!';
+                            roundWinner = 'Computer';
+                        }else{
+                            console.log('It\'s a draw!');
+                            document.getElementById('resultMsg').textContent = 'It\'s a draw!';
+                            roundWinner = 'Draw';
+                        }
+                        break;
+                    
+                    case 'SCISSORS':
+                        if(computerSelection == 'PAPER'){
+                            console.log('You won! Scissors beats Paper!');
+                            document.getElementById('resultMsg').textContent = 'You won! Scissors beats Paper!';
+                            roundWinner = 'Player';
+                        }else if(computerSelection == 'ROCK'){
+                            console.log('You lose! Scissors loses to Rock!');
+                            document.getElementById('resultMsg').textContent = 'You lose! Scissors loses to Rock!';
+                            roundWinner = 'Computer';
+                        }else{
+                            console.log('It\'s a draw!');
+                            document.getElementById('resultMsg').textContent = 'It\'s a draw!';
+                            roundWinner = 'Draw';
+                        }
+                        
+                        if(roundWinner == 'Player'){
+                            playerScore++;
+                        }else if(roundWinner == 'Computer'){
+                            computerScore;
+                        }else{
+
+                        }
+                }
+                
+                incScore(roundWinner);
+            }
+
+            function incScore(roundWinner){
+
+                let playagain;
+
+                if(roundWinner == 'Player'){
+                    playerScore++;
+                    document.getElementById('player').textContent = 'PLAYER SCORE: ' + playerScore;
+                }else if(roundWinner == 'Computer'){
+                    computerScore++;
+                    document.getElementById('computer').textContent = 'COMPUTER SCORE: ' + computerScore;
+                }
+
+                if(playerScore === 5){
+                    playagain = confirm('Congratulations! You won the game! Play again?');   
+                } else if(computerScore === 5) {
+                    playagain = confirm('You lose! Play again?'); 
+                } 
+
+                if(playagain){
+                    setGame();
+                }
+
+            }
+
+            function setGame(){
+
+                playerScore = 0;
+                computerScore = 0;
+
+                document.getElementById('player').textContent = 'PLAYER SCORE: ' + playerScore;
+                document.getElementById('computer').textContent = 'COMPUTER SCORE: ' + computerScore;
+                document.getElementById('resultMsg').textContent = '';
+
+            }
+
+            
+
+        </script>
+
+    </body>
+</html>
